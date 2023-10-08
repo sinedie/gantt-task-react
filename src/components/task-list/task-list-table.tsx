@@ -63,9 +63,6 @@ export const TaskListTableDefault: React.FC<{
             newRow = false;
           } 
           previousTaskEndDate = t.end;
-          previousTaskName = t.name;
-          previousTaskId = t.id;
-          previousTaskSwimLaneID = t.swimLaneID;
         }
         if (newRow){
           let expanderSymbol = "";
