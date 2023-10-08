@@ -480,6 +480,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
           ganttHeight={ganttHeight}
           scrollY={scrollY}
           scrollX={scrollX}
+          barTaskIndexMax={barTaskUniqueIndices.length}
         />
         {ganttEvent.changedTask && (
           <Tooltip
