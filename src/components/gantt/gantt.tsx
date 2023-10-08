@@ -451,6 +451,19 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     TaskListHeader,
     TaskListTable,
   };
+  // Ivo Sturm: Added barTaskUniqueIndices to make sure GanttHeight is adjusted when multiple tasks are on same line/index in horizontal mode
+  let barTaskUniqueIndices =[];
+  barTasks.forEach(barTask=>{
+    let alreadyInArray = false;
+    barTaskUniqueIndices.forEach(barTaskUnique=>{
+      if (barTaskUnique === barTask.index){
+          alreadyInArray = true;
+      }
+    })
+    if (!alreadyInArray){
+      barTaskUniqueIndices.push(barTask.index);
+    }
+  })
   return (
     <div>
       <div
