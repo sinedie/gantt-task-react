@@ -11,6 +11,7 @@ export type GridBodyProps = {
   columnWidth: number;
   todayColor: string;
   rtl: boolean;
+  isHorizontalDisplay: boolean;
 };
 export const GridBody: React.FC<GridBodyProps> = ({
   tasks,
@@ -20,6 +21,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
   columnWidth,
   todayColor,
   rtl,
+  isHorizontalDisplay
 }) => {
   let y = 0;
   const gridRows: ReactChild[] = [];
@@ -33,27 +35,41 @@ export const GridBody: React.FC<GridBodyProps> = ({
       className={styles.gridRowLine}
     />,
   ];
+  // horizontal display variable
+  let previousTaskEndDate = '';
+  
   for (const task of tasks) {
-    gridRows.push(
-      <rect
-        key={"Row" + task.id}
-        x="0"
-        y={y}
-        width={svgWidth}
-        height={rowHeight}
-        className={styles.gridRow}
-      />
-    );
-    rowLines.push(
-      <line
-        key={"RowLine" + task.id}
-        x="0"
-        y1={y + rowHeight}
-        x2={svgWidth}
-        y2={y + rowHeight}
-        className={styles.gridRowLine}
-      />
-    );
+    // START IVO STURM: Don't create new row in gridBody if tasks can fit horizontally next to each other
+    let newRow = true;
+    if (isHorizontalDisplay){
+      if (task.start >= previousTaskEndDate){   
+        newRow = false;
+      } 
+      previousTaskEndDate = task.end;
+    }
+    if (newRow){
+      gridRows.push(
+        <rect
+          key={"Row" + task.id}
+          x="0"
+          y={y}
+          width={svgWidth}
+          height={rowHeight}
+          className={styles.gridRow}
+        />
+      );
+      rowLines.push(
+        <line
+          key={"RowLine" + task.id}
+          x="0"
+          y1={y + rowHeight}
+          x2={svgWidth}
+          y2={y + rowHeight}
+          className={styles.gridRowLine}
+        />
+      );
+    }
+    
     y += rowHeight;
   }
 
