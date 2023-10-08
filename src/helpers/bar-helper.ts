@@ -20,12 +20,27 @@ export const convertToBarTasks = (
   projectBackgroundColor: string,
   projectBackgroundSelectedColor: string,
   milestoneBackgroundColor: string,
-  milestoneBackgroundSelectedColor: string
+  milestoneBackgroundSelectedColor: string,
+  isHorizontalDisplay: boolean
 ) => {
+  let previousTaskEndDate = '',
+  noOfAdjacentCorrections = 0;
+  
   let barTasks = tasks.map((t, i) => {
+    let correctedIndex = i;
+    if (isHorizontalDisplay){
+      if (previousTaskEndDate !== '' && t.start >= previousTaskEndDate){   
+          noOfAdjacentCorrections++;
+          correctedIndex = i - noOfAdjacentCorrections;
+      } else if (previousTaskEndDate !== ""){
+        correctedIndex = i - noOfAdjacentCorrections;
+      }
+      // always need to subtract 1, since zero base index
+      correctedIndex--;
+    }
     return convertToBarTask(
       t,
-      i,
+      correctedIndex,
       dates,
       columnWidth,
       rowHeight,
