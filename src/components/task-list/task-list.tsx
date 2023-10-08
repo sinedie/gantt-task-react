@@ -34,6 +34,7 @@ export type TaskListProps = {
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: Task) => void;
   }>;
+  isHorizontalDisplay: boolean;
 };
 
 export const TaskList: React.FC<TaskListProps> = ({
@@ -53,6 +54,7 @@ export const TaskList: React.FC<TaskListProps> = ({
   horizontalContainerClass,
   TaskListHeader,
   TaskListTable,
+  isHorizontalDisplay
 }) => {
   const horizontalContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -78,6 +80,7 @@ export const TaskList: React.FC<TaskListProps> = ({
     selectedTaskId: selectedTaskId,
     setSelectedTask,
     onExpanderClick,
+    isHorizontalDisplay
   };
 
   return (
