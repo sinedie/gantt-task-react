@@ -11,7 +11,7 @@ export type GridBodyProps = {
   columnWidth: number;
   todayColor: string;
   rtl: boolean;
-  isHorizontalDisplay: boolean;
+  isHorizontalDisplay?: boolean;
 };
 export const GridBody: React.FC<GridBodyProps> = ({
   tasks,
